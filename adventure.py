@@ -159,16 +159,6 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 def main():
     """main"""
     player_health = 100
-    monster_health = 70 # Example hardcoded value
-    has_treasure = False
-
-    has_treasure = random.choice([True, False]) # Randomly assign treasure
-
-    player_health = handle_path_choice(player_health)
-
-    treasure_obtained_in_combat = combat_encounter(player_health, monster_health, has_treasure)
-
-    check_for_treasure(treasure_obtained_in_combat) # Or has_treasure, depending on logic
 
     inventory = []  # Empty inventory at the start
     inventory = ["old map"] + ["iron sword"] #Uses concatination to give starting items
