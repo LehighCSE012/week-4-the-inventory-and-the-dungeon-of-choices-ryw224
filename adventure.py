@@ -80,7 +80,7 @@ def acquire_item(inventory, item):
     """Acquires item"""
     if item not in inventory: # Checks for duplicates
         inventory.append(item) #  - append(): Used in acquire_item to add an item
-        print(f"You found a {item} in the room!")
+        print(f"You accquired a {item}!")
     elif item in inventory:
         print("You already have the item.")
     return inventory
@@ -105,7 +105,8 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         except TypeError:
             print("Cannot modify a tuple")
         if item:
-            inventory = acquire_item(inventory, item)
+            inventory.append(item)
+            print(f"You found a {item} in the room.")
         if challenge_type == "none":
             print("There doesn't seem to be a challenge in this room. You move on.")
         else:
