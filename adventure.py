@@ -78,10 +78,11 @@ def check_for_treasure(has_treasure):
 
 def acquire_item(inventory, item):
     """Acquires item"""
-    inventory.append(item) #  - append(): Used in acquire_item to add an item to the inventory list.
-    print(f"You acquired a {item}!")
-    if item in inventory:
-        inventory.pop() # - pop(): Removes duplicate items from inventory
+    if item not in inventory: # Checks for duplicates
+        inventory.append(item) #  - append(): Used in acquire_item to add an item to the inventory list.
+        print(f"You acquired a {item}!")
+    elif item in inventory:
+       print("You already have the item.")
     return inventory
 
 def display_inventory(inventory):
