@@ -78,24 +78,8 @@ def check_for_treasure(has_treasure):
     else:
         print("The monster did not have the treasure. You continue your journey.")
 
-#Runs situation
-def main():
-    "where the situation runs"
-    player_health = 100
-    monster_health = 70 # Example hardcoded value
-    has_treasure = False
-
-    has_treasure = random.choice([True, False]) # Randomly assign treasure
-
-    player_health = handle_path_choice(player_health)
-
-    treasure_obtained_in_combat = combat_encounter(player_health, monster_health, has_treasure)
-
-    check_for_treasure(treasure_obtained_in_combat) # Or has_treasure, depending on logic
-
-inventory = []
 def acquire_item(inventory, item):
-    inventory.append(item)
+    inventory.append(item) #  - append(): Used in acquire_item to add an item to the inventory list.
     print(f"You acquired a {item}!")
     return inventory
 
@@ -111,19 +95,17 @@ def display_inventory(inventory):
 def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
-        print(room_description)
-        
+        print(room_description)       
         if item:  
-            inventory = acquire_item(inventory, item)
-        
+            inventory = acquire_item(inventory, item)     
         if challenge_type == "none":
             print("There doesn't seem to be a challenge in this room. You move on.")
         else:
             if challenge_type == "puzzle":
                 print("You encounter a puzzle!")
-                choice = input("Do you want to solve or skip the puzzle? (solve/skip): ").strip().lower()
-                if choice == "solve":
-                    success = random.choice([True, False])
+            choice = input("Do you want to solve or skip the puzzle? (solve/skip): ").strip().lower()
+                    if choice == "solve":
+                        success = random.choice([True, False])
                     if success:
                         print(challenge_outcome[0])  # Success message
                         player_health += challenge_outcome[2]  # Health change
@@ -168,11 +150,8 @@ def main():
     # Start the dungeon exploration
     player_health, inventory = enter_dungeon(player_health, inventory, dungeon_rooms)
 
-# 4. List and Tuple Operations Explanation:
-#  - append(): Used in acquire_item to add an item to the inventory list.
-#  - enumerate(): Used in display_inventory to print the inventory with item numbers.
-#  - random.choice(): Used to randomly determine success or failure of challenges.
-#  - Tuples are immutable, so if we tried to change the item in a room, an error will occur.
+
+
 
 if __name__ == "__main__":
     main()
