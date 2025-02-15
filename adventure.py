@@ -103,9 +103,9 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         else:
             if challenge_type == "puzzle":
                 print("You encounter a puzzle!")
-            choice = input("Do you want to solve or skip the puzzle? (solve/skip): ").strip().lower()
-                    if choice == "solve":
-                        success = random.choice([True, False])
+                choice = input("Do you want to solve or skip the puzzle? (solve/skip): ").strip().lower()
+                if choice == "solve":
+                    success = random.choice([True, False])
                     if success:
                         print(challenge_outcome[0])  # Success message
                         player_health += challenge_outcome[2]  # Health change
