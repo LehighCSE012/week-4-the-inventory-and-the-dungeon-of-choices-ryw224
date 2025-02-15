@@ -79,11 +79,13 @@ def check_for_treasure(has_treasure):
         print("The monster did not have the treasure. You continue your journey.")
 
 def acquire_item(inventory, item):
+    """Acquires item"""
     inventory.append(item) #  - append(): Used in acquire_item to add an item to the inventory list.
     print(f"You acquired a {item}!")
     return inventory
 
 def display_inventory(inventory):
+    """Shows inventory"""
     if not inventory:  # If the inventory is empty
         print("Your inventory is empty.")
     else:
@@ -93,11 +95,12 @@ def display_inventory(inventory):
 
 
 def enter_dungeon(player_health, inventory, dungeon_rooms):
+    "Enters dungeon and runs through scenario"
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
-        print(room_description)       
-        if item:  
-            inventory = acquire_item(inventory, item)     
+        print(room_description)
+        if item:
+            inventory = acquire_item(inventory, item)
         if challenge_type == "none":
             print("There doesn't seem to be a challenge in this room. You move on.")
         else:
@@ -130,12 +133,12 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                 player_health = 0
 
         display_inventory(inventory)  # Show inventory after each room
-    
     print(f"Your final health is {player_health}.")
     return player_health, inventory
 
 # 3. Main Game Integration
 def main():
+    """main"""
     player_health = 100  # Starting health
     inventory = []  # Empty inventory at the start
 
@@ -146,7 +149,6 @@ def main():
         ("A grand hall with a shimmering pool", "healing potion", "none", None),
         ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
     ]
-    
     # Start the dungeon exploration
     player_health, inventory = enter_dungeon(player_health, inventory, dungeon_rooms)
 
