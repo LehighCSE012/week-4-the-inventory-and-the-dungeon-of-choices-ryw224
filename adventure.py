@@ -100,7 +100,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
         print(room_description)
-        try:
+        """try:
             room[1] = "Bathroom"
         except TypeError:
             print("Cannot modify a tuple")
@@ -154,7 +154,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             # Ensure health does not drop below 0
         display_inventory(inventory)  # Show inventory after each room
     print(f"Your final health is {player_health}.")
-    return player_health, inventory
+    return player_health, inventory"""
 
 def main():
     """main"""
