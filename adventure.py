@@ -80,9 +80,9 @@ def acquire_item(inventory, item):
     """Acquires item"""
     if item not in inventory: # Checks for duplicates
         inventory.append(item) #  - append(): Used in acquire_item to add an item
-        print(f"You accquired a {item}!")
-    elif item in inventory:
-        print("You already have the item.")
+        print(f"You acquired a {item}!")
+    """elif item in inventory:
+        print("You already have the item.")"""
     return inventory
 
 def display_inventory(inventory):
@@ -104,38 +104,47 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             room[1] = "Bathroom"
         except TypeError:
             print("Cannot modify a tuple")
-        if item:
-            inventory.append(item)
-            print(f"You found a {item} in the room.")
+            print(item)
+        if item is not None:
+            acquire_item(inventory, item)
+        else:
+            print("There was nothing in the room.")
         if challenge_type == "none":
             print("There doesn't seem to be a challenge in this room. You move on.")
-        else:
-            if challenge_type == "puzzle":
-                print("You encounter a puzzle!")
-                choice = input("Do you want to solve or skip the puzzle?").strip().lower()
-                if choice == "solve":
-                    success = random.choice([True, False])
-                    if success:
-                        print(challenge_outcome[0])  # Success message
-                        player_health += challenge_outcome[2]  # Health change
-                    else:
-                        print(challenge_outcome[1])  # Failure message
-                        player_health += challenge_outcome[2]  # Health change
-            elif challenge_type == "trap":
-                print("You see a potential trap!")
-                choice = input("Do you want to disarm or bypass the trap?: ").strip().lower()
-                if choice == "disarm":
-                    success = random.choice([True, False])
-                    if success:
-                        print(challenge_outcome[0])
-                        player_health += challenge_outcome[2]
-                    else:
-                        print(challenge_outcome[1])  # Failure message
-                        player_health += challenge_outcome[2]  # Health change
+        elif challenge_type == "puzzle":
+            print("You encounter a puzzle!")
+            choice = input("Do you want to solve or skip the puzzle?").strip().lower()
+            if choice == "solve":
+                success = random.choice([True, False])
+                if success:
+                    print(challenge_outcome[0])  # Success message
+                    player_health += challenge_outcome[2]  # Health change
+                else:
+                    print(challenge_outcome[1])  # Failure message
+                    player_health += challenge_outcome[2]  # Health change
+        elif challenge_type == "trap":
+            print("You see a potential trap!")
+            choice = input("Do you want to disarm or bypass the trap?: ").strip().lower()
+            if choice == "disarm":
+                success = random.choice([True, False])
+                if success:
+                    print(challenge_outcome[0])
+                    player_health += challenge_outcome[2]
+                else:
+                    print(challenge_outcome[1])  # Failure message
+                    player_health += challenge_outcome[2]  # Health change
+            elif choice == "bypass":
+                success = random.random() < 0.75
+                if success:
+                    print("You sucessfully manuevered around the trap.")
+                    player_health -= 5
+                else:
+                    print("You tripped while trying to bypass the trap.")
+                    player_health -= 15
             # Ensure health does not drop below 0
-            if player_health <= 0:
-                print("You are barely alive!")
-                player_health = 0
+        if player_health <= 0:
+            print("You are barely alive!")
+            player_health = 0
 
         display_inventory(inventory)  # Show inventory after each room
     print(f"Your final health is {player_health}.")
