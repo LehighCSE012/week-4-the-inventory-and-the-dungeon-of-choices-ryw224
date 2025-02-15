@@ -90,7 +90,7 @@ def display_inventory(inventory):
         print("Your inventory is empty.")
     else:
         print("Your inventory:")
-        for i, item in enumerate(inventory, start=1):  # Using enumerate() to print items with numbers
+        for i, item in enumerate(inventory, start=1):  # enumerate() to print items with numbers
             print(f"{i}. {item}")
 
 
@@ -106,7 +106,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
         else:
             if challenge_type == "puzzle":
                 print("You encounter a puzzle!")
-                choice = input("Do you want to solve or skip the puzzle? (solve/skip): ").strip().lower()
+                choice = input("Do you want to solve or skip the puzzle?").strip().lower()
                 if choice == "solve":
                     success = random.choice([True, False])
                     if success:
@@ -117,7 +117,7 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                         player_health += challenge_outcome[2]  # Health change
             elif challenge_type == "trap":
                 print("You see a potential trap!")
-                choice = input("Do you want to disarm or bypass the trap? (disarm/bypass): ").strip().lower()
+                choice = input("Do you want to disarm or bypass the trap?: ").strip().lower()
                 if choice == "disarm":
                     success = random.choice([True, False])
                     if success:
@@ -144,10 +144,13 @@ def main():
 
     # Example dungeon rooms
     dungeon_rooms = [
-        ("A dusty old library", "key", "puzzle", ("You solved the puzzle!", "The puzzle remains unsolved.", -5)),
-        ("A narrow passage with a creaky floor", None, "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
+        ("A dusty old library", "key", "puzzle",
+         ("You solved the puzzle!", "The puzzle remains unsolved.", -5)),
+        ("A narrow passage with a creaky floor",
+         None, "trap", ("You skillfully avoid the trap!", "You triggered a trap!", -10)),
         ("A grand hall with a shimmering pool", "healing potion", "none", None),
-        ("A small room with a locked chest", "treasure", "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
+        ("A small room with a locked chest", "treasure",
+         "puzzle", ("You cracked the code!", "The chest remains stubbornly locked.", -5))
     ]
     # Start the dungeon exploration
     player_health, inventory = enter_dungeon(player_health, inventory, dungeon_rooms)
