@@ -81,7 +81,7 @@ def acquire_item(inventory, item):
     if item not in inventory: # Checks for duplicates
         inventory.append(item) #  - append(): Used in acquire_item to add an item
         print(f'You found a {item} in the room.')
-        print(f'You accquired a {item}!')
+        print(f'You acquired a {item}!')
     elif item in inventory:
         print("You already have the item.")
     return inventory
