@@ -130,9 +130,10 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             if choice == "disarm":
                 success = random.choice([True, False])
                 if success:
-                    print(challenge_outcome[0])
-                    player_health += challenge_outcome[2]
-                    inventory.remove("iron sword") # Uses remove method to remove item used to disarm trap
+                    if "iron sword" in inventory:
+                        print(challenge_outcome[0])
+                        player_health += challenge_outcome[2]
+                        inventory.remove("iron sword") # Uses remove to remove item used to disarm
                 else:
                     print(challenge_outcome[1])  # Failure message
                     player_health += challenge_outcome[2]  # Health change
