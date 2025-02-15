@@ -1,6 +1,4 @@
-# Your code goes here
-
-'''Runs through a adventure situation through the use of functions'''
+'''Runsthrough a adventure situation through the use of functions'''
 import random
 
 #Prints health
@@ -82,6 +80,8 @@ def acquire_item(inventory, item):
     """Acquires item"""
     inventory.append(item) #  - append(): Used in acquire_item to add an item to the inventory list.
     print(f"You acquired a {item}!")
+    if item in inventory:
+        inventory.pop() # - pop(): Removes duplicate items from inventory
     return inventory
 
 def display_inventory(inventory):
@@ -99,6 +99,10 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
     for room in dungeon_rooms:
         room_description, item, challenge_type, challenge_outcome = room
         print(room_description)
+        try:
+            room[1] = "Bathroom"
+        except TypeError:
+            print("Cannot modify a tuple")
         if item:
             inventory = acquire_item(inventory, item)
         if challenge_type == "none":
@@ -126,7 +130,6 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                     else:
                         print(challenge_outcome[1])  # Failure message
                         player_health += challenge_outcome[2]  # Health change
-
             # Ensure health does not drop below 0
             if player_health <= 0:
                 print("You are barely alive!")
@@ -136,10 +139,21 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
     print(f"Your final health is {player_health}.")
     return player_health, inventory
 
-# 3. Main Game Integration
 def main():
     """main"""
-    player_health = 100  # Starting health
+    
+    player_health = 100
+    monster_health = 70 # Example hardcoded value
+    has_treasure = False
+
+    has_treasure = random.choice([True, False]) # Randomly assign treasure
+
+    player_health = handle_path_choice(player_health)
+
+    treasure_obtained_in_combat = combat_encounter(player_health, monster_health, has_treasure)
+
+    check_for_treasure(treasure_obtained_in_combat) # Or has_treasure, depending on logic
+
     inventory = []  # Empty inventory at the start
 
     # Example dungeon rooms
@@ -154,9 +168,6 @@ def main():
     ]
     # Start the dungeon exploration
     player_health, inventory = enter_dungeon(player_health, inventory, dungeon_rooms)
-
-
-
 
 if __name__ == "__main__":
     main()
