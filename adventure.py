@@ -81,8 +81,8 @@ def acquire_item(inventory, item):
     if item not in inventory: # Checks for duplicates
         inventory.append(item) #  - append(): Used in acquire_item to add an item
         print(f"You acquired a {item}!")
-    """elif item in inventory:
-        print("You already have the item.")"""
+    elif item in inventory:
+        print("You already have the item.")
     return inventory
 
 def display_inventory(inventory):
@@ -104,7 +104,6 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
             room[1] = "Bathroom"
         except TypeError:
             print("Cannot modify a tuple")
-            print(item)
         if item is not None:
             acquire_item(inventory, item)
         else:
@@ -122,6 +121,9 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                 else:
                     print(challenge_outcome[1])  # Failure message
                     player_health += challenge_outcome[2]  # Health change
+                if player_health <= 0:
+                    print("You are barely alive!")
+                    player_health = 0
         elif challenge_type == "trap":
             print("You see a potential trap!")
             choice = input("Do you want to disarm or bypass the trap?: ").strip().lower()
@@ -130,22 +132,25 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
                 if success:
                     print(challenge_outcome[0])
                     player_health += challenge_outcome[2]
+                    inventory.remove("iron sword") # Uses remove method to remove item used to disarm trap
                 else:
                     print(challenge_outcome[1])  # Failure message
                     player_health += challenge_outcome[2]  # Health change
+                if player_health <= 0:
+                    print("You are barely alive!")
+                    player_health = 0
             elif choice == "bypass":
                 success = random.random() < 0.75
                 if success:
-                    print("You sucessfully manuevered around the trap.")
+                    print("You successfully manuevered around the trap.")
                     player_health -= 5
                 else:
                     print("You tripped while trying to bypass the trap.")
                     player_health -= 15
+                if player_health <= 0:
+                    print("You are barely alive!")
+                    player_health = 0
             # Ensure health does not drop below 0
-        if player_health <= 0:
-            print("You are barely alive!")
-            player_health = 0
-
         display_inventory(inventory)  # Show inventory after each room
     print(f"Your final health is {player_health}.")
     return player_health, inventory
@@ -165,6 +170,7 @@ def main():
     check_for_treasure(treasure_obtained_in_combat) # Or has_treasure, depending on logic
 
     inventory = []  # Empty inventory at the start
+    inventory = ["old map"] + ["iron sword"] #Uses concatination to give starting items
 
     # Example dungeon rooms
     dungeon_rooms = [
@@ -178,6 +184,10 @@ def main():
     ]
     # Start the dungeon exploration
     player_health, inventory = enter_dungeon(player_health, inventory, dungeon_rooms)
+    if player_health > 0:
+        print(f"You survived the dungeon with {player_health} health.")
+    else:
+        print("You perished.")
 
 if __name__ == "__main__":
     main()
