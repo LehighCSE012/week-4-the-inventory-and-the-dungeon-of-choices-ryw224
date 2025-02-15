@@ -141,7 +141,6 @@ def enter_dungeon(player_health, inventory, dungeon_rooms):
 
 def main():
     """main"""
-    
     player_health = 100
     monster_health = 70 # Example hardcoded value
     has_treasure = False
